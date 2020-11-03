@@ -1,25 +1,50 @@
-const CustomError = require("../extensions/custom-error");
-
 const chainMaker = {
+  string: "",
   getLength() {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    return this.string.split("~~").length;
   },
   addLink(value) {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    if (
+      value === false ||
+      value ||
+      value === 0 ||
+      value == undefined ||
+      value.toString() === "NaN"
+    ) {
+      chainMaker.string === ""
+        ? (this.string = `( ${value} )`)
+        : (this.string = `${this.string}~~( ${value} )`);
+    } else {
+      chainMaker.string === ""
+        ? (this.string = `( )`)
+        : (this.string = `${this.string}~~( )`);
+    }
+    return this;
   },
   removeLink(position) {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    if (
+      position <= 0 ||
+      typeof position !== "number" ||
+      position !== Number.parseInt(position, 10) ||
+      position > this.string.split("~~").length
+    ) {
+      this.string = "";
+      throw new Error("Wrong position!");
+    } else {
+      this.string = this.string.split("~~");
+      this.string.splice(position - 1, 1);
+      this.string = this.string.join("~~");
+      return this;
+    }
   },
   reverseChain() {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    this.string = this.string.split("~~").reverse().join("~~");
+    return this;
   },
   finishChain() {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    let result = this.string;
+    this.string = "";
+    return result;
   }
 };
 
