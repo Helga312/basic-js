@@ -1,29 +1,19 @@
 const CustomError = require("../extensions/custom-error");
 
 module.exports = function createDreamTeam(members) {
-  let dreamTeam = ''
-  let trimMembers = []
-  let sortMembers = []
 
-  if (members) {
-    for (let i = 0; i < members.length; i++) {
-      if (typeof members[i] === 'string') {
-        trimMembers[i] = members[i].trim().toUpperCase()
-      } else continue
+  if (!(members instanceof Object)) return false;
 
-      sortMembers = trimMembers.sort()
+  let dreamTeam = [];
+  let length = members.length;
+
+  for (let i = 0; i < length; i++) {
+    if (typeof members[i] === "string") {
+      let trimMembers = members[i].trim();
+      dreamTeam.push(trimMembers[0].toUpperCase());
     }
-  } else return false
-
-  for (i = 0; i < trimMembers.length; i++) {
-    if (trimMembers[i]) {
-      dreamTeam = `${dreamTeam}${trimMembers[i][0].toUpperCase()}`
-    } else continue
   }
 
-  if (dreamTeam) {
-    return dreamTeam
-  } else return false
-
+  return dreamTeam.sort().join("");
 
 };
